@@ -37,7 +37,7 @@ const movieSchema = new mongoose.Schema(
       maxLength: 50,
     },
 
-    Reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
+    reviews: [{ type: mongoose.Types.ObjectId, ref: "Review" }],
     
     avgRating: {
       type: Number,
