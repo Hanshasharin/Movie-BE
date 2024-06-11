@@ -8,6 +8,7 @@ import userRouter from "./Routers/userRouter.js";
 import passport from "./passport.js";
 
  import adminRouter from "./Routers/adminRouter.js";
+import movieRouter from "./Routers/movieRouter.js";
 
  
 
@@ -22,6 +23,14 @@ app.use(express.json());
 
 app.use ("/api/v1/users",userRouter)
  app.use("/api/v1/admin", adminRouter)
+ app.use("/api/v1/movie", movieRouter)
+
+ 
+ 
+
+
+
+
 
 
 const port = 3000;

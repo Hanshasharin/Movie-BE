@@ -1,8 +1,6 @@
-
-
-
 import bcrypt from "bcrypt";
 import User from "../models/userModel.js";
+
 import { generateToken } from "../utils/generateToken.js";
 
 export const signin = async (req, res) => {
@@ -31,7 +29,10 @@ export const signin = async (req, res) => {
       return res.status(500).json({ message: "User creation failed" });
     }
 
-    const token = generateToken({ id: newUserCreated._id, email: newUserCreated.email });
+    const token = generateToken({
+      id: newUserCreated._id,
+      email: newUserCreated.email,
+    });
 
     res.cookie("token", token, { httpOnly: true });
     return res.status(201).json({ message: "Signed up successfully!", token });

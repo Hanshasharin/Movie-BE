@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const movieSchema = new mongoose.Schema(
   {
     title: {
@@ -10,7 +11,7 @@ const movieSchema = new mongoose.Schema(
     description: {
       type: String,
       required: true,
-      maxLength: 1000,
+      // maxLength: 1000,
     },
     releaseDate: {
       type: Date,
@@ -18,6 +19,8 @@ const movieSchema = new mongoose.Schema(
     },
     genre: {
       type: String,
+      // enum: ["Sci-Fi", "Thriller", "Romance", "Action", "Comedy"], // Define enum options
+
       required: true,
     maxLength: 50,
     },

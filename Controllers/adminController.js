@@ -1,12 +1,7 @@
-
-
 import bcrypt from "bcrypt";
 import Admin from "../models/adminModel.js";
 import { generateToken } from "../utils/generateToken.js";
 import User from "../models/userModel.js";
-
-
-
 
 export const signupAdmin = async (req, res) => {
   try {
@@ -39,7 +34,6 @@ export const signupAdmin = async (req, res) => {
       return res.status(500).json({ message: "Admin creation failed" });
     }
 
-
     // Send success response
     res.status(201).json({ message: "Admin signed up successfully!", token });
   } catch (error) {
@@ -48,51 +42,45 @@ export const signupAdmin = async (req, res) => {
   }
 };
 
-
 export const adminLogin = async (req, res) => {
-    try {
-      const body = req.body;
-      const { email, password } = body;
-      console.log(body);
-  
-      const admin = await Admin.findOne({ email });
-  
-      if (!admin) {
-        return res.send("admin is not found");
-      }
-  
-      const matchPassword = await bcrypt.compare(
-        password,
-        admin.hashPassword
-      );
-  
-      console.log(matchPassword, "matchpassword");
-      if (!matchPassword) {
-        return res.send("password is not match");
-      }
-  
-      
-      const token = generateToken({ id: admin._id, role: admin.role, email: admin.email });
-      res.json({ message: "Logged in!", token });
-      
-  
-    
-    } catch (error) {
-      console.error("Error", error);
-      res.status(500).send("Internal Server Error");
+  try {
+    const body = req.body;
+    const { email, password } = body;
+    console.log(body);
+
+    const admin = await Admin.findOne({ email });
+
+    if (!admin) {
+      return res.send("admin is not found");
     }
-  };
 
+    const matchPassword = await bcrypt.compare(password, admin.hashPassword);
 
+    console.log(matchPassword, "matchpassword");
+    if (!matchPassword) {
+      return res.send("password is not match");
+    }
 
-  // to get user list
+    const token = generateToken({
+      id: admin._id,
+      role: admin.role,
+      email: admin.email,
+    });
+    res.json({ message: "Logged in!", token });
+  } catch (error) {
+    console.error("Error", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 
-
+// to get user list
 
 export const getUserList = async (req, res) => {
   try {
     // Fetch user list sorted by creation date in descending order
-    const userList = await User.find({}).sort({ createdAt: -1 });
+    const userList = await User.find({})
+      .sort({ createdAt: -1 })
+      .populate("userReviews");
     res.status(200).json(userList);
   } catch (error) {
     console.error("Error fetching user list:", error);
