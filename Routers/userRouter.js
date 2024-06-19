@@ -16,6 +16,7 @@ userRouter.post(
   "/addreview/:movieId",
   passport.authenticate("user-jwt", { session: false }),
   createReview
+
 );
 userRouter.get("/getreview/:movieId", getReviews);
 userRouter.delete(

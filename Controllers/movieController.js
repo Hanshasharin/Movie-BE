@@ -7,6 +7,7 @@ export const getMovies = async (req, res) => {
     const movies = await Movie.find().populate("reviews"); // Fetch all movies
     if (!movies) {
       return res.status(404).send("No movies found");
+    
     }
     return res.status(200).json(movies);
   } catch (error) {
@@ -68,7 +69,7 @@ export const addMovie = async (req, res) => {
         genre,
         cast,
         director,
-        language,
+        languag,
         avgRating,
         trailerUrl,
         reviews,
@@ -82,7 +83,7 @@ export const addMovie = async (req, res) => {
         image: imageUrl,
         cast,
         director,
-        language,
+        languag,
         avgRating,
         trailerUrl,
         reviews,
@@ -96,6 +97,7 @@ export const addMovie = async (req, res) => {
     });
   } catch (error) {
     console.log("something went wrong", error);
+    
     res.send("failed to add a movie");
   }
 };
@@ -177,6 +179,7 @@ export const search = async (req, res) => {
       genre: "text",
       cast: "text",
       director: "text",
+
     });
 
     const { query } = req.query;

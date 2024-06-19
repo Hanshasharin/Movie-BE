@@ -4,13 +4,15 @@ import { generateToken } from "../utils/generateToken.js";
 import User from "../models/userModel.js";
 
 export const signupAdmin = async (req, res) => {
+  console.log('Received request body:', req.body); // Log the received request body
+
   try {
     console.log(req.body);
 
     const { email, password, name } = req.body;
 
     // Check if an admin already exists
-    const adminExist = await Admin.findOne({});
+    const adminExist = await Admin.findOne({ email });
     if (adminExist) {
       return res.status(403).json({ message: "Admin already exists" });
     }
@@ -35,7 +37,7 @@ export const signupAdmin = async (req, res) => {
     }
 
     // Send success response
-    res.status(201).json({ message: "Admin signed up successfully!", token });
+    res.status(201).json({ message: "Admin signed up successfully!"});
   } catch (error) {
     console.error("Error in signup:", error);
     res.status(500).json({ message: "Internal Server Error" });

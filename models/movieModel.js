@@ -27,16 +27,16 @@ const movieSchema = new mongoose.Schema(
     cast: {
         type: String,
         required: true,
-        maxLength: 1000,
+        // maxLength: 1000,
       },
     director: {
       type: String,
       required: true,
       maxLength: 50,
     },
-    language: {
+    languag: {
       type: String,
-      required: true,
+      // required: true,
       maxLength: 50,
     },
 
@@ -46,7 +46,7 @@ const movieSchema = new mongoose.Schema(
       type: Number,
       default: 0,
       min: 0,
-      max: 5,
+      max: 10,
     },
     
     trailerUrl: {
@@ -60,6 +60,7 @@ const movieSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+movieSchema.index({ title: 'text', description: 'text', genre: 'text', cast: 'text', director: 'text' });
 
 const Movie = mongoose.model("Movie", movieSchema);
 
