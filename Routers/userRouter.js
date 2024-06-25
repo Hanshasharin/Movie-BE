@@ -1,7 +1,7 @@
 import express from "express";
 import passport from "passport";
-import { signin } from "../controllers/userController.js";
-import { login } from "../controllers/userController.js";
+import { signin } from "../Controllers/userController.js";
+import { login } from "../Controllers/userController.js";
 import {
   createReview,
   deleteReview,
