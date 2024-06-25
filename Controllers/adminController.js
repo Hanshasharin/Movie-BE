@@ -9,6 +9,7 @@ export const signupAdmin = async (req, res) => {
   try {
     console.log(req.body);
 
+
     const { email, password, name } = req.body;
 
     // Check if an admin already exists
@@ -17,6 +18,7 @@ export const signupAdmin = async (req, res) => {
       return res.status(403).json({ message: "Admin already exists" });
     }
 
+    
     // Hash the password
     const saltRounds = 10;
     const hashPassword = await bcrypt.hash(password, saltRounds);

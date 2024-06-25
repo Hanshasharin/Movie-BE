@@ -2,6 +2,7 @@
 
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+// import { ensureIndexes } from "../Controllers/movieController.js";
 
 dotenv.config(); // Load environment variables from .env file
 
@@ -11,6 +12,9 @@ export const connectDB = async () => {
   try {
     await mongoose.connect(DB_URL);
     console.log("MongoDB connected");
+    // ensureIndexes();
+     // Create indexes on application startup
+
   } catch (error) {
     console.error("Error connecting to MongoDB:", error);
   }

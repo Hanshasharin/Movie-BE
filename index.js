@@ -15,7 +15,7 @@ const app = express();
 app.use(cors({
   origin: 'http://localhost:5173', // Allow requests from your frontend
   methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed methods
-  allowedHeaders: ['Content-Type', 'Authorization'], // Specify the allowed headers
+  allowedHeaders: ['Content-Type', 'Authorization', 'Authorization-Key'], // Specify the allowed headers
   credentials: true // Allow credentials
   
 }));
@@ -57,7 +57,7 @@ app.use ("/api/v1/users",userRouter)
 
 
 
-const port = 3000;
+const port = process.env.PORT || 3000
 
 
 
@@ -72,5 +72,6 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
+  
   console.log(`Example app listening on port ${port}`);
 });

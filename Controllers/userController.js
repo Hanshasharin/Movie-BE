@@ -61,7 +61,7 @@ export const login = async (req, res) => {
     // const token= generateToken(payload)
     const token = generateToken({ id: user._id, email: user.email });
 
-    res.cookie("token", token, { httpOnly: true });
+    // res.cookie("token", token, { httpOnly: true });
     return res.status(200).json({ message: "Logged in successfully!", token });
   } catch (error) {
     console.error("Error in signin:", error);

@@ -6,9 +6,10 @@ import { adminLogin, deleteUser, getUserList, signupAdmin } from "../Controllers
 import { addMovie, deleteMovie } from "../Controllers/movieController.js";
 import upload from "../middlewares/upload.js"; // Importing upload middleware
 import checkAdmin from "../middlewares/checkAdmin.js";
+import { checkAuthKey } from "../middlewares/authMiddleware.js";
 const adminRouter = express.Router();
 
-adminRouter.post("/signupAdmin", signupAdmin);
+adminRouter.post("/signupAdmin", checkAuthKey , signupAdmin);
 adminRouter.post("/loginAdmin", adminLogin);
 adminRouter.get('/users', passport.authenticate('jwt', { session: false }),checkAdmin, getUserList);
 adminRouter.delete('/delete-user/:id', passport.authenticate('jwt', { session: false }), checkAdmin,deleteUser); 

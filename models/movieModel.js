@@ -24,11 +24,17 @@ const movieSchema = new mongoose.Schema(
       required: true,
     maxLength: 50,
     },
+    
+    category: {
+      type: String,
+      required: true,},
+
     cast: {
         type: String,
         required: true,
         // maxLength: 1000,
       },
+
     director: {
       type: String,
       required: true,
