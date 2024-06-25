@@ -13,8 +13,8 @@ const app = express();
 
  
 app.use(cors({
-  origin: 'http://localhost:5173', // Allow requests from your frontend
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the allowed methods
+  origin:['http://localhost:5173','https://movie-backendserver.onrender.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE'], 
   allowedHeaders: ['Content-Type', 'Authorization', 'Authorization-Key'], // Specify the allowed headers
   credentials: true // Allow credentials
   
@@ -46,6 +46,7 @@ app.use ("/api/v1/users",userRouter)
       'Access-Control-Allow-Origin': '*' // Add this header
     });
     res.end(response.data, 'binary');
+  
   } catch (error) {
     console.error('Error fetching image:', error);
     res.status(500).send('Internal Server Error');
@@ -72,6 +73,6 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-  
+
   console.log(`Example app listening on port ${port}`);
 });
