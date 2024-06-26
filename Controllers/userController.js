@@ -20,7 +20,7 @@ export const signin = async (req, res) => {
       email,
       firstName,
       lastName,
-      hashPassword,
+      password:hashPassword,
     });
 
     const newUserCreated = await newUser.save();
@@ -52,7 +52,7 @@ export const login = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    const matchPassword = await bcrypt.compare(password, user.hashPassword);
+    const matchPassword = await bcrypt.compare(password, user.password);
 
     if (!matchPassword) {
       return res.status(401).json({ message: "Incorrect password" });

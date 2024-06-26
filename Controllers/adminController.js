@@ -27,7 +27,7 @@ export const signupAdmin = async (req, res) => {
     const newAdmin = new Admin({
       name,
       email,
-      hashPassword,
+      password:hashPassword,
       role: "admin",
     });
 
@@ -58,7 +58,7 @@ export const adminLogin = async (req, res) => {
       return res.send("admin is not found");
     }
 
-    const matchPassword = await bcrypt.compare(password, admin.hashPassword);
+    const matchPassword = await bcrypt.compare(password, admin.password);
 
     console.log(matchPassword, "matchpassword");
     if (!matchPassword) {
@@ -70,6 +70,7 @@ export const adminLogin = async (req, res) => {
       role: admin.role,
       email: admin.email,
     });
+    
     res.json({ message: "Logged in!", token });
   } catch (error) {
     console.error("Error", error);
