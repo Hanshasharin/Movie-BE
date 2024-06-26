@@ -15,7 +15,7 @@ const adminSchema = new mongoose.Schema(
       type: String,
       enum: ["instructor", "admin"],
     },
-    hashPassword: {
+    password: {
       type: String,
       required: true,
       minLength: 6,
