@@ -84,8 +84,17 @@ export const getUserList = async (req, res) => {
   try {
     // Fetch user list sorted by creation date in descending order
     const userList = await User.find({})
+
       .sort({ createdAt: -1 })
-      .populate("userReviews");
+      // .populate("userReviews");
+      
+      .populate({
+        path: 'userReviews',
+        populate: {
+          path: 'movie',
+          select: 'title' // Select only the title of the movie
+        }
+      });
     res.status(200).json(userList);
   } catch (error) {
     console.error("Error fetching user list:", error);

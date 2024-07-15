@@ -3,47 +3,6 @@ import Movie from "../models/movieModel.js";
 import User from "../models/userModel.js";
 import mongoose from "mongoose";
 
-// export const createReview = async (req, res) => {
-//   try {
-//     const { user, movie, rating, review } = req.body;
-
-//     // Check if the movie exists
-//     console.log("Movie ID:", movie);
-
-//     const movieExists = await Movie.findById(movie);
-//     if (!movieExists) {
-//       return res.status(404).json({ error: 'Movie not found' });
-//     }
-
-//     const userExists = await User.findById(user);
-//     if (!userExists) {
-//       return res.status(404).json({ error: 'User not found' });
-//     }
-
-//     const newReview = new Review({
-//       user,
-//       movie,
-//       rating,
-//       review
-//     });
-
-//     const savedReview = await newReview.save();
-
-//     // Update the movie document to include this review
-//     movieExists.reviews.push(savedReview._id); // Push the new review's ID into the movie's reviews array
-//     await movieExists.save(); // Save the updated movie document
-
-//     const populatedReview = await Review.findById(savedReview._id)
-//     .populate('user', 'email')
-//     .populate('movie', 'title')
-//     .exec();
-
-//     res.status(201).json(populatedReview);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: 'Internal Server Error' });
-//   }
-// };
 
 export const createReview = async (req, res) => {
   try {
@@ -57,6 +16,12 @@ export const createReview = async (req, res) => {
     if (!movieExists) {
       return res.status(404).json({ error: "Movie not found" });
     }
+
+  // Check if the user has already reviewed the movie
+  const existingReview = await Review.findOne({ movie: movieId, user: userId });
+  if (existingReview) {
+    return res.status(403).json({ error: "You have already reviewed this movie." });
+  }
 
     // Create and save the new review
     const newReview = new Review({
@@ -72,6 +37,11 @@ export const createReview = async (req, res) => {
     movieExists.reviews.push(savedReview._id); // Push the new review's ID into the movie's reviews array
     await movieExists.save(); // Save the updated movie document
 
+    // Update the user document to include this review
+    const userExists = await User.findById(userId);
+    userExists.userReviews.push(savedReview._id); // Push the new review's ID into the user's reviews array
+    await userExists.save(); // Save the updated user document
+
     const populatedReview = await Review.findById(savedReview._id)
       .populate("user", "email")
       .populate("movie", "title")
@@ -83,6 +53,8 @@ export const createReview = async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
 
 export const getReviews = async (req, res) => {
   try {

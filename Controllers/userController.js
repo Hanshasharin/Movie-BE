@@ -68,3 +68,26 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+
+
+
+export const getUserProfile = async (req, res) => {
+  try {
+    const userId = req.user._id; // Get the authenticated user's ID from req.user
+    const user = await User.findById(userId)
+      .populate({
+        path: 'userReviews',
+        populate: { path: 'movie', select: 'title' },
+      });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+};
